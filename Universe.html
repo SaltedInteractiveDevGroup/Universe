@@ -1,0 +1,162 @@
+<html lang="en-us">
+<head>
+    <title>Universe</title>
+
+    <link rel="icon" type="x/image" href="systemH/thumbnails/favicon.ico">
+
+    <link rel="stylesheet" href="systemH/program-files-s/Locator/locator.css">
+    <link rel="stylesheet" href="systemH/program-files-s/user-manager/login.css">
+    <link rel="stylesheet" href="systemH/program-files-s/Tabs/tabs.css">
+	<link rel="stylesheet" href="systemH/program-files/Files/files.css">
+	<link rel="stylesheet" href="systemH/program-files/text-editor/style.css">
+</head>
+<body onLoad="finishLoad()">
+    <script src="systemH/program-files-s/Tabs/tabs.js"></script>
+	<script src="systemH/program-files-s/over-key/overkey.js"></script>
+	<script src="systemH/program-files-s/Firmware/manager.js"></script>
+	<script src="systemH/program-files/Files/files.js"></script>
+	<script src="systemH/temp/login.tmp"></script>
+	<script src="systemH/program-files/text-editor/script.js"></script>
+
+    <div class="window2" id="load">
+        <center>
+            <br>
+            <img src="systemH/thumbnails/loadScroll.png" class="loadScroll" alt="loading">
+            <h1>Universe</h1>
+            <h4>Web Simulator Kernel</h4>
+        </center>
+    </div>
+
+	<div class="popupWindow" id="powerMenu">
+		<center>
+			<h1>Power Menu</h1>
+			<button class="button" onClick="shutdown()">Shutdown</button><br><br>
+			<button class="button" onClick="restart()">Refresh GPU</button><br><br>
+			<button class="button" onClick="update()">Update Universe</button><br><br>
+			<button class="button" onClick="logout()">Cancel</button>
+		</center>
+	</div>
+
+    <div class="window" id="login">
+        <center>
+            <br>
+            <img src="systemH/thumbnails/user.png" class="userIcon" alt="User Icon">
+            <h1 id="usernameOutput">Public</h1>
+			<p id="passwordStat">Please enter a password.</p>
+			<input class="input" id="passwordInput" type="password"><br><br>
+            <button class="button" onClick="publicLogin()">Login</button>
+			<p id="hintOutput"></p><br>
+        </center>
+    </div>
+
+    <div id="deskpad" class="deskpad">
+        <button class="padIcon" onClick="openApp('settings')"><img alt="Settings" src="systemH/thumbnails/settings.png" class="padImage"></button>&nbsp
+		<button class="padIcon" onClick="openApp('textEditor')"><img alt="Text Editor" src="systemH/thumbnails/text.png" class="padImage"></button><br><br>
+		<button class="padIcon" onClick="openApp('files')"><img alt="Files" src="systemH/thumbnails/files.png" class="padImage"></button><br><br>
+		<button class="padIcon" onClick="openApp('powerMenu')"><img alt="Power Menu" src="systemH/thumbnails/menu.png" class="padImage"></button><br><br>
+		<button class="padIcon" onClick="openApp('info')"><img alt="System Info" src="systemH/thumbnails/info.png" class="padImage"></button>
+    </div>
+
+	<div class="window" id="info">
+		<div class="tabs">
+			<button class="tablink" onClick="openTab('basicinfo')">Basic Info</button>
+			<button class="tablink" onClick="closeApp('info')">Close</button>
+		</div>
+
+		<div class="tabcontent" id="basicinfo">
+			<h1>Basic Info</h1>
+			<p>Name: Universe</p>
+			<p>Type: Web Simulator Kernel</p>
+			<p>Developer: GroupSSalt / SaltedInteractive</p>
+			<p>Version: 0.7</p>
+			<p>Firmware: Universe Controller 0.5</p>
+		</div>
+	</div>
+
+	<div class="window" id="settings">
+		<div class="tabs">
+			<button class="tablink" onClick="openTab('users')">Users</button>
+			<button class="tablink" onClick="closeApp('settings')">Close</button>
+		</div>
+
+		<div class="tabcontent" id="users">
+			<h2>Users</h2>
+			<p>Change Password</p>
+			<input class="input" id="changePasswordInput" type="password"><br><br>
+			<input class="input" id="changePasswordInput2" type="password"><br>
+			<p id="changePasswordStat">Enter a new Password</p>
+			<button class="button" onClick="changePassword()">Change</button>
+			<p>Change Hint</p>
+			<input class="input" id="changeHintInput" type="text"><br>
+			<p id="changeHintStat">Enter a new Hint</p>
+			<button class="button" onClick="changeHint()">Change</button>
+			<p>Change Username</p>
+			<input class="input" id="changeUsernameInput" type="text"><br>
+			<p id="changeUsernameStat">Enter a new Username</p>
+			<button class="button" onClick="changeUsername()">Change</button>
+		</div>
+	</div>
+
+	<div class="window" id="files">
+		<div class="tabs">
+			<button class="tablink" onClick="openTab('filesContent')">Files</button>
+			<button class="tablink" onClick="closeApp('files')">Close</button>
+		</div>
+
+		<div class="tabcontent" id="filesContent">
+			<button class="files-button" onClick="clearStorage()">Delete All</button><br><br>
+			<p id="files-password" class="files-section">Password: ""</p><button class="files-button" onClick="remove('publicPassword')">Delete</button>
+			<p id="files-hint" class="files-section">Hint: "There is no hint"</p><button class="files-button" onClick="remove('hint')">Delete</button>
+			<p id="files-username" class="files-section">Username: "Public"</p><button class="files-button" onClick="remove('username')">Delete</button><br><br>
+			<h3>Null = Nothing</h3>
+			<button class="files-button" onClick="showAllFiles()">All Files</button><br>
+			<p class="files-section" id="localStorageContents"></p>
+		</div>
+	</div>
+
+	<div class="window" id="textEditor">
+		<div class="tabs">
+			<button class="tablink" onClick="openTab('text')">Type</button>
+			<button class="tablink" onClick="closeApp('textEditor')">Close</button>
+		</div>
+		<div class="tabcontent" id="text">
+<textarea id="editor"></textarea>
+<br><br>
+
+<label for="fontsize">Font Size:</label>
+<input class="input" type="number" id="fontsize" min="10" max="40" value="16">
+<br><br>
+
+<label for="fontcolor">Font Color:</label>
+<input class="option" type="color" id="fontcolor" value="#000000">
+<br><br>
+
+<label for="fontfamily">Font Family:</label>
+<select class="option" id="fontfamily">
+    <option value="Arial">Arial</option>
+    <option value="Times New Roman">Times New Roman</option>
+    <option value="Courier New">Courier New</option>
+    <option value="Verdana">Verdana</option>
+</select>
+<br><br>
+
+<label for="textalign">Text Alignment:</label>
+<select class="option" id="textalign">
+    <option value="left">Left</option>
+    <option value="center">Center</option>
+    <option value="right">Right</option>
+</select>
+<br><br>
+			
+<button class="button" onclick="applyStyles()">Apply Styles</button><br><br>
+			
+			<label for="filename">Enter a filename:</label>
+<input class="input" type="text" id="filename"><br>
+			
+<button class="button" onclick="saveText()">Save</button><br>
+<button class="button" onclick="loadText()">Open</button><br>
+<button class="button" onclick="removeText()">Delete</button>
+		</div>
+	</div>
+</body>
+</html>
